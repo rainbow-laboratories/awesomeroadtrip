@@ -7,11 +7,23 @@
     <groupId>org.rainbowlabs</groupId>
     <artifactId>awesomeroadtrip</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>6</source>
+                    <target>6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
             <groupId>com.b3dgs.lionengine</groupId>
-            <artifactId>lionengine-core</artifactId>
+            <artifactId>lionengine-core-awt</artifactId>
             <version>9.0.0</version>
         </dependency>
     </dependencies>
