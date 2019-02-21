@@ -26,6 +26,16 @@
             <artifactId>lionengine-core-awt</artifactId>
             <version>9.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.b3dgs.lionengine</groupId>
+            <artifactId>lionengine-game</artifactId>
+            <version>9.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.b3dgs.lionengine</groupId>
+            <artifactId>lionengine-audio-sc68</artifactId>
+            <version>9.0.0</version>
+        </dependency>
     </dependencies>
 
 
