@@ -2,6 +2,7 @@ package org.rainbowlabs.awesomeroadtrip.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,9 +21,7 @@ public class AwesomeRoadTrip extends Game {
     public final static int PREFERENCES = 1;
     public final static int APPLICATION = 2;
     public final static int ENDGAME = 3;
-    Texture texture;
-    SpriteBatch batch;
-    Music music;
+
 
     @Override
     public void create() {
@@ -41,6 +40,8 @@ public class AwesomeRoadTrip extends Game {
 
     @Override
     public void pause() {
+
+
     }
 
     @Override

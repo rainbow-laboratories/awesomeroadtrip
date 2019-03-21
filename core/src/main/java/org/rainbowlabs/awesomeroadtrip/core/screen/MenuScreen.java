@@ -2,6 +2,7 @@ package org.rainbowlabs.awesomeroadtrip.core.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,14 +16,15 @@ import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 public class MenuScreen implements Screen {
     private AwesomeRoadTrip parent;
     protected Stage stage;
-    protected Batch batch;
     protected Texture background;
 
     public MenuScreen(AwesomeRoadTrip parent) {
         this.parent = parent;
         stage = new Stage(new ScreenViewport());
         background = new Texture("worldmap.jpg");
+        stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.getBatch().end();
         Gdx.input.setInputProcessor(stage);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -30,6 +32,10 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(1f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
 
     }
 

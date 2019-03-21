@@ -1,6 +1,8 @@
 package org.rainbowlabs.awesomeroadtrip.core.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
 public class LoadingScreen implements Screen {
@@ -9,11 +11,14 @@ public class LoadingScreen implements Screen {
 
     public LoadingScreen(AwesomeRoadTrip awesomeRoadTrip) {
         this.parent = awesomeRoadTrip;
+        parent.changeScreen(AwesomeRoadTrip.MENU);
     }
 
     @Override
     public void render(float delta) {
-        parent.changeScreen(AwesomeRoadTrip.MENU);
+        Gdx.gl.glClearColor(1f, 1f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
     }
 
