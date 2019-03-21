@@ -1,54 +1,77 @@
 package org.rainbowlabs.awesomeroadtrip.core;
 
-import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import org.rainbowlabs.awesomeroadtrip.core.screen.*;
 
-public class AwesomeRoadTrip implements ApplicationListener {
-	Texture texture;
-	SpriteBatch batch;
-	Music music;
+public class AwesomeRoadTrip extends Game {
 
-	@Override
-	public void create () {
-		texture = new Texture(Gdx.files.internal("worldmap.jpg"));
-		batch = new SpriteBatch();
-		music = Gdx.audio.newMusic(Gdx.files.getFileHandle("title_theme.wav", Files.FileType.Internal));
-		music.setVolume(0.5f);
-		music.play();
-		music.setLooping(true);
-	}
+    private LoadingScreen loadingScreen;
+    private PreferencesScreen preferencesScreen;
+    private MenuScreen menuScreen;
+    private MainScreen mainScreen;
+    private EndScreen endScreen;
 
-	@Override
-	public void resize (int width, int height) {
-	}
+    public final static int MENU = 0;
+    public final static int PREFERENCES = 1;
+    public final static int APPLICATION = 2;
+    public final static int ENDGAME = 3;
+    Texture texture;
+    SpriteBatch batch;
+    Music music;
 
-	@Override
-	public void render () {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(texture, 0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		batch.end();
+    @Override
+    public void create() {
+        loadingScreen = new LoadingScreen(this);
+        this.setScreen(loadingScreen);
+    }
 
-	}
+    @Override
+    public void resize(int width, int height) {
+    }
 
-	@Override
-	public void pause () {
-		music.pause();
-	}
+    @Override
+    public void render() {
 
-	@Override
-	public void resume () {
-		music.play();
-	}
+    }
 
-	@Override
-	public void dispose () {
-		music.dispose();
-	}
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    public void changeScreen(int screen) {
+        switch (screen) {
+            case MENU:
+                if (menuScreen == null) menuScreen = new MenuScreen(this);
+                this.setScreen(menuScreen);
+                break;
+            case PREFERENCES:
+                if (preferencesScreen == null) preferencesScreen = new PreferencesScreen(this);
+                this.setScreen(preferencesScreen);
+                break;
+            case APPLICATION:
+                if (mainScreen == null) mainScreen = new MainScreen(this);
+                this.setScreen(mainScreen);
+                break;
+            case ENDGAME:
+                if (endScreen == null) endScreen = new EndScreen(this);
+                this.setScreen(endScreen);
+                break;
+        }
+    }
+
 }
