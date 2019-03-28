@@ -22,9 +22,6 @@ public class MenuScreen implements Screen {
         this.parent = parent;
         stage = new Stage(new ScreenViewport());
         background = new Texture("worldmap.jpg");
-        stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.getBatch().end();
         Gdx.input.setInputProcessor(stage);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -32,8 +29,10 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1f, 0f, 0f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        System.out.println("RENDER MENU");
+        stage.getBatch().begin();
+        stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
@@ -41,7 +40,10 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        System.out.println("Resize MainMenu");
+        stage.getBatch().begin();
+        stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.getBatch().end();
     }
 
     @Override

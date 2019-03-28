@@ -12,12 +12,14 @@ public class LoadingScreen implements Screen {
     public LoadingScreen(AwesomeRoadTrip awesomeRoadTrip) {
         this.parent = awesomeRoadTrip;
         parent.changeScreen(AwesomeRoadTrip.MENU);
+        System.out.println("Change screen to Menu");
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1f, 1f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        System.out.println("Render in Loadingscreen");
 
 
     }

@@ -26,16 +26,17 @@ public class AwesomeRoadTrip extends Game {
     @Override
     public void create() {
         loadingScreen = new LoadingScreen(this);
-        this.setScreen(loadingScreen);
     }
 
     @Override
     public void resize(int width, int height) {
+        this.getScreen().resize(width, height);
     }
 
     @Override
     public void render() {
 
+        this.getScreen().render(0);
     }
 
     @Override
