@@ -2,10 +2,7 @@ package org.rainbowlabs.awesomeroadtrip.core.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -29,7 +26,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        System.out.println("RENDER MENU");
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.getBatch().end();
@@ -40,7 +36,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("Resize MainMenu");
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.getBatch().end();
