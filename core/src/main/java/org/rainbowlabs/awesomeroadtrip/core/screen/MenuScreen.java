@@ -2,6 +2,7 @@ package org.rainbowlabs.awesomeroadtrip.core.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,8 +13,10 @@ import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
 public class MenuScreen implements Screen {
     private AwesomeRoadTrip parent;
+    private Table table;
     protected Stage stage;
     protected Texture background;
+
 
     public MenuScreen(AwesomeRoadTrip parent) {
         this.parent = parent;
@@ -26,6 +29,12 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        // clear the screen ready for next set of images to be drawn
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -39,7 +48,10 @@ public class MenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         System.out.println("Resize MenuScreen");
-        //stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+
+        // change the stage's viewport when the screen size has changed
+        stage.getViewport().update(width, height, true);
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         stage.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
@@ -48,7 +60,7 @@ public class MenuScreen implements Screen {
     public void show() {
 
         // Create a table that fills the screen. Everything else will go inside this table.
-        Table table = new Table();
+        table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
 
@@ -57,11 +69,17 @@ public class MenuScreen implements Screen {
         TextButton newGame = new TextButton("New Game", skin);
         TextButton preferences = new TextButton("Preferences", skin);
         TextButton exit = new TextButton("Exit", skin);
-        table.add(newGame).fillX().uniformX();
+        table.add().expandX().fillX();
+        table.add(newGame).expandX().fillX();
+        table.add().expandX().fillX();
         table.row().pad(10, 0, 10, 0);
-        table.add(preferences).fillX().uniformX();
+        table.add().expandX().fillX();
+        table.add(preferences).expandX().fillX();
+        table.add().expandX().fillX();
         table.row();
-        table.add(exit).fillX().uniformX();
+        table.add().expandX().fillX();
+        table.add(exit).expandX().fillX();
+        table.add().expandX().fillX();
     }
 
     @Override
