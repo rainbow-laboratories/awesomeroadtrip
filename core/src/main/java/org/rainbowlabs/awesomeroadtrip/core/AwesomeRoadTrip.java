@@ -16,11 +16,13 @@ public class AwesomeRoadTrip extends Game {
     private MenuScreen menuScreen;
     private MainScreen mainScreen;
     private EndScreen endScreen;
+    private ExampleLevelScreen levelScreen;
 
     public final static int MENU = 0;
     public final static int PREFERENCES = 1;
     public final static int APPLICATION = 2;
-    public final static int ENDGAME = 3;
+    public final static int EXAMPLELEVEL = 3;
+    public final static int ENDGAME = 4;
 
 
     @Override
@@ -66,6 +68,10 @@ public class AwesomeRoadTrip extends Game {
                 this.setScreen(preferencesScreen);
                 break;
             case APPLICATION:
+                if (mainScreen == null) mainScreen = new MainScreen(this);
+                this.setScreen(mainScreen);
+                break;
+            case EXAMPLELEVEL:
                 if (mainScreen == null) mainScreen = new MainScreen(this);
                 this.setScreen(mainScreen);
                 break;
