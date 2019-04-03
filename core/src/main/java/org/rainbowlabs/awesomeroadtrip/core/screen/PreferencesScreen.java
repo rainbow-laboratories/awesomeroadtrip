@@ -5,6 +5,12 @@ import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
 
 public class PreferencesScreen implements Screen {
+    protected AwesomeRoadTrip parent;
+
+    public PreferencesScreen(AwesomeRoadTrip parent) {
+        this.parent = parent;
+    }
+
     @Override
     public void render(float delta) {
 
