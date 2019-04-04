@@ -5,30 +5,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
-public class MainScreen implements Screen {
-    private AwesomeRoadTrip parent;
-    private Table table;
+public abstract class AbstractScreen implements Screen {
+    protected AwesomeRoadTrip parent;
     protected Stage stage;
     protected Texture background;
 
-    public MainScreen(AwesomeRoadTrip parent) {
-        this.parent = parent;
-        stage = new Stage(new ScreenViewport());
-        background = new Texture("worldmap.jpg");
-        Gdx.input.setInputProcessor(stage);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
-
-
-    }
-
     @Override
     public void render(float delta) {
-
         // clear the screen ready for next set of images to be drawn
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -71,5 +57,14 @@ public class MainScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public AbstractScreen(AwesomeRoadTrip parent, String background) {
+        this.parent = parent;
+        this.background = new Texture(background);
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(this.stage);
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
     }
 }
