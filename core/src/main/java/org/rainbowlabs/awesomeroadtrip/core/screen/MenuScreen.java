@@ -14,19 +14,14 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
 public class MenuScreen implements Screen {
-    private AwesomeRoadTrip parent;
+    private AwesomeRoadTrip game;
     private Table table;
     protected Stage stage;
     protected Texture background;
 
 
-    public MenuScreen(AwesomeRoadTrip parent) {
-        this.parent = parent;
-        stage = new Stage(new ScreenViewport());
-        background = new Texture("worldmap.jpg");
-        Gdx.input.setInputProcessor(stage);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
+    public MenuScreen(AwesomeRoadTrip game) {
+        this.game = game;
     }
 
     @Override
@@ -44,23 +39,18 @@ public class MenuScreen implements Screen {
         stage.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+        Gdx.input.setInputProcessor(stage);
 
     }
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("Resize MenuScreen");
-
-
-        // change the stage's viewport when the screen size has changed
-        stage.getViewport().update(width, height, true);
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        stage.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
     public void show() {
-
+        stage = new Stage(new ScreenViewport());
+        background = new Texture("worldmap.jpg");
         // Create a table that fills the screen. Everything else will go inside this table.
         table = new Table();
         table.setFillParent(true);
@@ -72,21 +62,21 @@ public class MenuScreen implements Screen {
         newGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreen(AwesomeRoadTrip.APPLICATION);
+                game.changeScreen(AwesomeRoadTrip.APPLICATION);
             }
         });
         TextButton preferences = new TextButton("Preferences", skin);
         preferences.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreen(AwesomeRoadTrip.PREFERENCES);
+                game.changeScreen(AwesomeRoadTrip.PREFERENCES);
             }
         });
         TextButton exit = new TextButton("Exit", skin);
         exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreen(AwesomeRoadTrip.ENDGAME);
+                game.changeScreen(AwesomeRoadTrip.ENDGAME);
             }
         });
         table.add().expandX().fillX();
@@ -103,8 +93,8 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void hide() {
 
+    public void hide() {
     }
 
     @Override
@@ -119,6 +109,5 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
     }
 }

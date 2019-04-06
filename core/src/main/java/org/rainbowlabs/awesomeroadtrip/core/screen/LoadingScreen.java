@@ -5,20 +5,18 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
+import java.awt.*;
+
 public class LoadingScreen implements Screen {
+    private AwesomeRoadTrip game;
 
-    private AwesomeRoadTrip parent;
-
-    public LoadingScreen(AwesomeRoadTrip awesomeRoadTrip) {
-        this.parent = awesomeRoadTrip;
-        parent.changeScreen(AwesomeRoadTrip.MENU);
+    public LoadingScreen(AwesomeRoadTrip game) {
+        this.game = game;
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1f, 1f, 0f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        this.game.changeScreen(AwesomeRoadTrip.MENU);
     }
 
     @Override

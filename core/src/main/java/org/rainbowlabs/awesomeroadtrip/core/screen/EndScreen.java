@@ -5,10 +5,10 @@ import com.badlogic.gdx.Screen;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
 public class EndScreen implements Screen {
-    private AwesomeRoadTrip parent;
+    private AwesomeRoadTrip game;
 
-    public EndScreen(AwesomeRoadTrip awesomeRoadTrip) {
-        this.parent = awesomeRoadTrip;
+    public EndScreen(AwesomeRoadTrip game) {
+        this.game = game;
     }
 
     @Override
