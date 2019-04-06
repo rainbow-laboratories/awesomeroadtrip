@@ -40,6 +40,7 @@ public class AwesomeRoadTrip extends Game {
 
     @Override
     public void resize(int width, int height) {
+        super.resize(width, height);
     }
 
     public void changeScreen(int screen) {
