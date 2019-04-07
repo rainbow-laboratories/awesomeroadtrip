@@ -57,6 +57,7 @@ public class MenuScreen implements Screen {
         background = new Texture("worldmap.jpg");
         // Create a table that fills the screen. Everything else will go inside this table.
         table = new Table();
+        table.debug();
         table.setFillParent(true);
         stage.addActor(table);
 

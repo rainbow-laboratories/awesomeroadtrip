@@ -7,12 +7,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
@@ -24,6 +23,9 @@ public class PreferencesScreen implements Screen {
     private Table table;
     protected Stage stage;
     protected Texture background;
+    protected static float buttonWidth = 175.0f;
+    protected static float buttonHeight = 75.0f;
+    protected static float defaultPad = 25.0f;
 
     public PreferencesScreen(AwesomeRoadTrip game) {
         this.game = game;
@@ -64,10 +66,36 @@ public class PreferencesScreen implements Screen {
         // Create a table that fills the screen. Everything else will go inside this table.
         table = new Table();
         table.setFillParent(true);
+        table.pad(defaultPad);
         stage.addActor(table);
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         CheckBox volumeMute = new CheckBox("Volume mute", skin);
+        TextButton backButton = new TextButton("Back to Menu", skin);
+        backButton.setHeight(buttonHeight);
+        backButton.setWidth(buttonWidth);
+        backButton.setPosition(Gdx.graphics.getWidth() - backButton.getWidth() - defaultPad, defaultPad);
+        stage.addActor(backButton);
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.changeScreen(AwesomeRoadTrip.MENU);
+            }
+        });
+        volumeMute.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (volumeMute.isChecked()) {
+                }
+            }
+        });
+        Slider volumeSlider = new Slider(0.0f, 10.0f, 0.5f, false, skin);
+        volumeSlider.setName("Volume");
+        volumeSlider.setWidth(buttonWidth);
+        volumeSlider.setHeight(buttonHeight);
         SelectBox resolutionSelect = new SelectBox(skin);
+        resolutionSelect.setWidth(buttonWidth);
+        resolutionSelect.setHeight(buttonHeight);
         resolutionSelect.setName("Resolution");
         String[] resArray = new String[6];
         resArray[0] = "640x480";
@@ -80,40 +108,33 @@ public class PreferencesScreen implements Screen {
         resolutionSelect.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Object select = resolutionSelect.getSelected();
-                System.out.println(resolutionSelect.getSelected());
-                switch (select.toString()) {
-                    case "640x480":
+                int index = resolutionSelect.getSelectedIndex();
+                System.out.println(index);
+                switch (index) {
+                    case 0:
                         Gdx.graphics.setWindowedMode(640, 480);
-                        game.resize(640,480);
-                        resolutionSelect.setSelected(select);
-                    case "800x600":
+                    case 1:
                         Gdx.graphics.setWindowedMode(800, 600);
-                        game.resize(800,600);
-                        resolutionSelect.setSelected(select);
-                    case "1024x768":
+                    case 2:
                         Gdx.graphics.setWindowedMode(1024, 768);
-                        game.resize(1024,768);
-                        resolutionSelect.setSelected(select);
-                    case "1280x720":
+                    case 3:
                         Gdx.graphics.setWindowedMode(1280, 720);
-                        game.resize(1280,720);
-                        resolutionSelect.setSelected(select);
-                    case "1920x1080":
+                    case 4:
                         Gdx.graphics.setWindowedMode(1920, 1080);
-                        game.resize(1920,1080);
-                        resolutionSelect.setSelected(select);
-                    case "Full Screen":
+                    case 5:
                         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-                        resolutionSelect.setSelected(select);
                 }
             }
         });
-        table.add().expandX().fillX();
-        table.add(volumeMute).expandX().fillX();
-        table.add().expandX().fillX();
-        table.add(resolutionSelect).expandX().fillX();
-        table.add().expandX().fillX();
+        table.pad(defaultPad);
+        table.columnDefaults(3);
+        table.setFillParent(true);
+        table.debug();
+        table.add(volumeMute).setActorX(buttonWidth);
+        table.row();
+        table.add(volumeSlider).setActorX(buttonWidth);
+        table.row();
+        table.add(resolutionSelect).setActorX(buttonWidth);
     }
 
     @Override
