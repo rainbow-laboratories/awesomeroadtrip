@@ -1,5 +1,6 @@
 package org.rainbowlabs.awesomeroadtrip.core.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
@@ -12,6 +13,7 @@ public class EndScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.app.exit();
 
     }
 
