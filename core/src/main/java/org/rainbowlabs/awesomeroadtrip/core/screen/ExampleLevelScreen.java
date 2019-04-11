@@ -20,16 +20,14 @@ public class ExampleLevelScreen implements Screen {
 
     private AwesomeRoadTrip parent;
     private Stage stage;
-    private Texture background;
     private OrthographicCamera cam;
     private float rotationSpeed;
     private SpriteBatch batch;
     private Sprite mapSprite;
-    private ShapeRenderer shapeRenderer;
+    private Sprite pauseSprite;
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
 
-    private boolean GAME_PAUSED = false;
 
 
     public ExampleLevelScreen(AwesomeRoadTrip awesomeRoadTrip) {
@@ -38,11 +36,16 @@ public class ExampleLevelScreen implements Screen {
         mapSprite = new Sprite(new Texture(Gdx.files.internal("Lvl2.jpg")));
         mapSprite.setPosition(0, 0);
         mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
+
+        pauseSprite = new Sprite(new Texture(Gdx.files.internal("Lvl2.jpg")));
+        //pauseSprite.setColor(Color.BLACK);
+        pauseSprite.setAlpha(20);
+
+        pauseSprite.setPosition(0, 0);
+        pauseSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
         this.parent = awesomeRoadTrip;
         stage = new Stage(new ScreenViewport());
-        background = new Texture("Lvl2.jpg");
         Gdx.input.setInputProcessor(stage);
-        shapeRenderer = new ShapeRenderer();
 
 
 
@@ -62,7 +65,7 @@ public class ExampleLevelScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        if (!GAME_PAUSED) {
+        if(!parent.isGAME_PAUSED()) {
             handleInput();
             cam.update();
             batch.setProjectionMatrix(cam.combined);
@@ -70,39 +73,19 @@ public class ExampleLevelScreen implements Screen {
             // clear the screen ready for next set of images to be drawn
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
             batch.begin();
             mapSprite.draw(batch);
             batch.end();
-        }else{
-            handleInput();
-            Gdx.gl.glClearColor(1, 1, 1, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-            Gdx.gl.glEnable(GL20.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            Gdx.gl.glDisable(GL20.GL_BLEND);
-
-            batch.setProjectionMatrix(cam.combined);
-
-            batch.begin();
-            //sprite.draw(batch);
-            batch.end();
-
-            shapeRenderer.setColor(Color.BLACK);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.circle(50, 50, 32);
-            shapeRenderer.end();
         }
     }
 
     private void handleInput(){
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            GAME_PAUSED = !GAME_PAUSED;
+            //Switch to pause screen
+            parent.changeScreen(AwesomeRoadTrip.PAUSESCREEN);
+
         }
-        if (!GAME_PAUSED){
-            handleCamInput();
-        }
+        handleCamInput();
     }
 
     private void handleCamInput() {
