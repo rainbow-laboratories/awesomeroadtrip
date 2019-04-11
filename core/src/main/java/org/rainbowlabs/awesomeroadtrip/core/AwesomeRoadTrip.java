@@ -2,6 +2,7 @@ package org.rainbowlabs.awesomeroadtrip.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
@@ -17,7 +18,11 @@ public class AwesomeRoadTrip extends Game {
     private MenuScreen menuScreen;
     private MainScreen mainScreen;
     private EndScreen endScreen;
+    private PauseScreen pauseScreen;
     private ExampleLevelScreen levelScreen;
+    private Screen pausedScreen;
+    
+    private boolean GAME_PAUSED = false;
 
     public final static int MENU = 0;
     public final static int PREFERENCES = 1;
@@ -39,9 +44,9 @@ public class AwesomeRoadTrip extends Game {
     @Override
     public void render() {
 
-        if (Gdx.input.isButtonPressed(Input.Keys.ESCAPE)) {
-            this.changeScreen(AwesomeRoadTrip.MENU);
-        }
+        // if (Gdx.input.isButtonPressed(Input.Keys.ESCAPE)) {
+        //    this.changeScreen(AwesomeRoadTrip.MENU);
+        // }
 
         this.getScreen().render(0);
     }
@@ -84,7 +89,24 @@ public class AwesomeRoadTrip extends Game {
                 if (endScreen == null) endScreen = new EndScreen(this);
                 this.setScreen(endScreen);
                 break;
+            case PAUSESCREEN:
+                if (pauseScreen == null) pauseScreen = new PauseScreen(this);
+                setGAME_PAUSED(true);
+                pausedScreen = this.getScreen();
+                this.setScreen(pauseScreen);
+                break;
+            case RESUME:
+                this.setScreen(pausedScreen);
+                GAME_PAUSED = false;
+                break;
         }
     }
 
+    public boolean isGAME_PAUSED() {
+        return GAME_PAUSED;
+    }
+
+    public void setGAME_PAUSED(boolean GAME_PAUSED) {
+        this.GAME_PAUSED = GAME_PAUSED;
+    }
 }
