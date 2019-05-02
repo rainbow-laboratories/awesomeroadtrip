@@ -81,6 +81,7 @@ public class PauseScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 parent.changeScreen(AwesomeRoadTrip.APPLICATION);
+                dispose();
             }
         });
         TextButton preferences = new TextButton("Preferences", skin);
@@ -88,6 +89,7 @@ public class PauseScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 parent.changeScreen(AwesomeRoadTrip.PREFERENCES);
+                dispose();
             }
         });
         TextButton exit = new TextButton("Resume Game", skin);
@@ -95,6 +97,7 @@ public class PauseScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 parent.changeScreen(AwesomeRoadTrip.RESUME);
+                dispose();
             }
         });
         table.add().expandX().fillX();
@@ -132,6 +135,7 @@ public class PauseScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        skin.dispose();
+        stage.dispose();
     }
 }

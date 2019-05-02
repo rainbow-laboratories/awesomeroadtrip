@@ -29,6 +29,8 @@ public class AwesomeRoadTrip extends Game {
     public final static int APPLICATION = 2;
     public final static int EXAMPLELEVEL = 3;
     public final static int ENDGAME = 4;
+    public final static int PAUSESCREEN = 5;
+    public final static int RESUME = 6;
 
 
     @Override
@@ -91,6 +93,7 @@ public class AwesomeRoadTrip extends Game {
                 break;
             case PAUSESCREEN:
                 if (pauseScreen == null) pauseScreen = new PauseScreen(this);
+                pauseScreen = new PauseScreen(this);
                 setGAME_PAUSED(true);
                 pausedScreen = this.getScreen();
                 this.setScreen(pauseScreen);
