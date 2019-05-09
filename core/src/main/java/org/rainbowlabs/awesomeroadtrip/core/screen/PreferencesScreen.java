@@ -1,6 +1,7 @@
 package org.rainbowlabs.awesomeroadtrip.core.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
@@ -16,6 +17,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
+import java.awt.*;
+
 
 public class PreferencesScreen implements Screen {
     private AwesomeRoadTrip game;
@@ -23,8 +26,8 @@ public class PreferencesScreen implements Screen {
     private Table table;
     protected Stage stage;
     protected Texture background;
-    protected static float buttonWidth = 175.0f;
-    protected static float buttonHeight = 75.0f;
+    protected static float buttonWidth = 125.0f;
+    protected static float buttonHeight = 50.0f;
     protected static float defaultPad = 25.0f;
 
     public PreferencesScreen(AwesomeRoadTrip game) {
@@ -53,10 +56,9 @@ public class PreferencesScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        Gdx.graphics.setWindowedMode(width, height);
         stage.getViewport().update(width, height, true);
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        stage.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
+        stage.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, width, height);
     }
 
     @Override
@@ -113,8 +115,10 @@ public class PreferencesScreen implements Screen {
                 switch (index) {
                     case 0:
                         Gdx.graphics.setWindowedMode(640, 480);
+                        resize(640, 480);
                     case 1:
                         Gdx.graphics.setWindowedMode(800, 600);
+                        resize(800, 600);
                     case 2:
                         Gdx.graphics.setWindowedMode(1024, 768);
                     case 3:
@@ -122,7 +126,7 @@ public class PreferencesScreen implements Screen {
                     case 4:
                         Gdx.graphics.setWindowedMode(1920, 1080);
                     case 5:
-                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+//                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                 }
             }
         });
