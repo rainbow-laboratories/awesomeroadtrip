@@ -1,16 +1,10 @@
 package org.rainbowlabs.awesomeroadtrip.core;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import org.rainbowlabs.awesomeroadtrip.core.screen.*;
 
-import static com.badlogic.gdx.Gdx.graphics;
 
 public class AwesomeRoadTrip extends Game {
     public LoadingScreen loadingScreen;
