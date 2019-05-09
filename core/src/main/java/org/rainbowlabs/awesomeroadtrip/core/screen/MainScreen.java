@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 
 public class MainScreen implements Screen {
@@ -17,12 +19,14 @@ public class MainScreen implements Screen {
     protected Texture background;
     protected ShapeRenderer shapeRenderer;
     protected Vector2 position;
+    protected Stage stage;
     float maxVelocity = 100.0f;
     float playerWidth = 30.0f;
     float playerHeight = 60.0f;
 
     public MainScreen(AwesomeRoadTrip game) {
         this.game = game;
+        stage = new Stage(new ScreenViewport());
 
     }
 
