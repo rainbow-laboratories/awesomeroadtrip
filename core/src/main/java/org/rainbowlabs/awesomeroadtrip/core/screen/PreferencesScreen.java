@@ -40,6 +40,8 @@ public class PreferencesScreen implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getBatch().begin();
+        stage.getBatch().setTransformMatrix(stage.getCamera().view);
+        stage.getBatch().setProjectionMatrix(stage.getCamera().projection);
         stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.getBatch().end();
@@ -56,8 +58,8 @@ public class PreferencesScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        Gdx.graphics.setWindowedMode(width, height);
         stage.getViewport().update(width, height, true);
+        stage.getCamera().update();
         stage.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, width, height);
     }
 
@@ -114,17 +116,15 @@ public class PreferencesScreen implements Screen {
                 System.out.println(index);
                 switch (index) {
                     case 0:
-                        Gdx.graphics.setWindowedMode(640, 480);
                         resize(640, 480);
                     case 1:
-                        Gdx.graphics.setWindowedMode(800, 600);
                         resize(800, 600);
                     case 2:
-                        Gdx.graphics.setWindowedMode(1024, 768);
+                        resize(1024, 768);
                     case 3:
-                        Gdx.graphics.setWindowedMode(1280, 720);
+                        resize(1280, 1024);
                     case 4:
-                        Gdx.graphics.setWindowedMode(1920, 1080);
+                        resize(1920, 1080);
                     case 5:
 //                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                 }

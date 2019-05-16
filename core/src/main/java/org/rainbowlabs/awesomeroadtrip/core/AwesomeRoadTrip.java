@@ -3,6 +3,7 @@ package org.rainbowlabs.awesomeroadtrip.core;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
@@ -67,5 +68,4 @@ public class AwesomeRoadTrip extends Game {
                 break;
         }
     }
-
 }
