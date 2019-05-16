@@ -1,7 +1,6 @@
 package org.rainbowlabs.awesomeroadtrip.core;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import org.rainbowlabs.awesomeroadtrip.core.Utils;
 
 /**
  * The progress bar which reassembles the behaviour of the health bar.

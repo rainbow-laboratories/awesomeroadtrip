@@ -98,6 +98,12 @@
                 <artifactId>gdx-backend-ios</artifactId>
                 <version>${libgdx.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.rainbowlabs</groupId>
+                <artifactId>LAIM</artifactId>
+                <version>0.0.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -110,6 +116,11 @@
         <repository>
             <id>gdx-releases</id>
             <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>github</id>
+            <name>GitHub rainbow-laboratories Maven Packages</name>
+            <url>https://maven.pkg.github.com/rainbow-laboratories</url>
         </repository>
     </repositories>
 
