@@ -28,7 +28,7 @@ public class PauseScreen implements Screen {
         this.parent = awesomeRoadTrip;
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        label = new Label("Paused" ,skin);
+        label = new Label("Paused", skin);
         label.setFontScale(10, 10f);
 
         Gdx.input.setInputProcessor(stage);

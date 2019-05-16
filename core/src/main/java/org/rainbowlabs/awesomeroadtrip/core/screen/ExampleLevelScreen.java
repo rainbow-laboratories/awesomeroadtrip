@@ -6,13 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 import org.rainbowlabs.awesomeroadtrip.core.HealthBar;
@@ -27,9 +24,8 @@ public class ExampleLevelScreen implements Screen {
     private float rotationSpeed;
     private SpriteBatch batch;
     private Sprite mapSprite;
-    private Sprite pauseSprite;
     private HealthBar healthBar;
-    private Pixmap pixmap;
+    private TextField userInput;
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
 
@@ -39,16 +35,10 @@ public class ExampleLevelScreen implements Screen {
 
 
     public ExampleLevelScreen(AwesomeRoadTrip awesomeRoadTrip) {
-        rotationSpeed = 0.5f;
-
-        mapSprite = new Sprite(new Texture(Gdx.files.internal("Lvl2.jpg")));
+        // Placement of background asset
+        mapSprite = new Sprite(new Texture(Gdx.files.internal("Lvl2.jpg"))); //<-- Place your lvl background here
         mapSprite.setPosition(0, 0);
         mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
-
-        pauseSprite = new Sprite(new Texture(Gdx.files.internal("Lvl2.jpg")));
-        pauseSprite.setAlpha(20);
-        pauseSprite.setPosition(0, 0);
-        pauseSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
         this.parent = awesomeRoadTrip;
         stage = new Stage(new ScreenViewport());
@@ -61,15 +51,29 @@ public class ExampleLevelScreen implements Screen {
         cam = new OrthographicCamera(30, 30 * (h / w));
         batch = new SpriteBatch();
 
+        //Cam positioning
+        cam.zoom = 3.3f;
+        float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
+        float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
+        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
+        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+        cam.position.y += 5;
+
+        // Spawn HealthBar
         healthBar = new HealthBar(100, 10);
         healthBar.setPosition(10, Gdx.graphics.getHeight() - 20);
         stage.addActor(healthBar);
 
+        // Place User Input
+        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        userInput = new TextField("", skin);
+        userInput.setMessageText("Antwort");
+        userInput.setPosition(30, 30);
+        stage.addActor(userInput);
     }
 
     @Override
     public void render(float delta) {
-
         if(!parent.isGAME_PAUSED()) {
             handleInput();
             cam.update();
@@ -96,16 +100,24 @@ public class ExampleLevelScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             //Switch to pause screen
             parent.changeScreen(AwesomeRoadTrip.PAUSESCREEN);
-
+        }else if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            System.out.println("User Input: " + userInput.getText());
         }
+
         handleCamInput();
     }
 
+    /**
+     * Function which controlls the camera.
+     * In a real lvl it should not be controlled by the player.
+     */
     private void handleCamInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        rotationSpeed = 0.5f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
             cam.zoom += 0.02;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_0)) {
             cam.zoom -= 0.02;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
