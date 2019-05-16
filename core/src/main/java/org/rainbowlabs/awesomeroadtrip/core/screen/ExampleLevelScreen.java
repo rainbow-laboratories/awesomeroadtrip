@@ -107,11 +107,17 @@ public class ExampleLevelScreen implements Screen {
         handleCamInput();
     }
 
+    /**
+     * Function which controlls the camera.
+     * In a real lvl it should not be controlled by the player.
+     */
     private void handleCamInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        rotationSpeed = 0.5f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
             cam.zoom += 0.02;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_0)) {
             cam.zoom -= 0.02;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
