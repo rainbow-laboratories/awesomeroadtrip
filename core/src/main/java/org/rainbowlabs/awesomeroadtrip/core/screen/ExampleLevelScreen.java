@@ -6,13 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 import org.rainbowlabs.awesomeroadtrip.core.HealthBar;
@@ -30,6 +27,7 @@ public class ExampleLevelScreen implements Screen {
     private Sprite pauseSprite;
     private HealthBar healthBar;
     private Pixmap pixmap;
+    private TextField userInput;
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
 
@@ -65,6 +63,12 @@ public class ExampleLevelScreen implements Screen {
         healthBar.setPosition(10, Gdx.graphics.getHeight() - 20);
         stage.addActor(healthBar);
 
+        // Place User Input
+        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        userInput = new TextField("", skin);
+        userInput.setMessageText("Antwort");
+        userInput.setPosition(30, 30);
+        stage.addActor(userInput);
     }
 
     @Override
@@ -97,6 +101,8 @@ public class ExampleLevelScreen implements Screen {
             //Switch to pause screen
             parent.changeScreen(AwesomeRoadTrip.PAUSESCREEN);
 
+        }else if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            System.out.println("User Input: " + userInput.getText());
         }
         handleCamInput();
     }
