@@ -125,8 +125,8 @@ public class PreferencesScreen implements Screen {
                         resize(1280, 1024);
                     case 4:
                         resize(1920, 1080);
+                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                     case 5:
-//                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                 }
             }
         });

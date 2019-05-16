@@ -12,8 +12,6 @@ public class AwesomeRoadTripDesktop {
         config.setTitle("Awesome Math Roadtrip");
         config.useVsync(true);
         config.setWindowIcon( Files.FileType.Internal,"icons/awesome32.png");
-//        config.setWindowIcon(Files.FileType.Internal, "icons/pined-path32");
-//        config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 
         new Lwjgl3Application(new AwesomeRoadTrip(), config);
     }
