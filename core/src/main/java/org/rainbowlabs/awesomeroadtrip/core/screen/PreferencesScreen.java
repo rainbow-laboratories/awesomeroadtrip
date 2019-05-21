@@ -1,7 +1,6 @@
 package org.rainbowlabs.awesomeroadtrip.core.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
@@ -13,25 +12,21 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
-
-import java.awt.*;
+import org.rainbowlabs.awesomeroadtrip.core.utility.Settings;
 
 
 public class PreferencesScreen implements Screen {
     private AwesomeRoadTrip game;
-    public static Preferences settings;
+    private Preferences settings;
     private Table table;
     protected Stage stage;
     protected Texture background;
-    protected static float buttonWidth = 125.0f;
-    protected static float buttonHeight = 50.0f;
-    protected static float defaultPad = 25.0f;
 
     public PreferencesScreen(AwesomeRoadTrip game) {
         this.game = game;
+        settings = Settings.getPreferences();
     }
 
     @Override
@@ -49,8 +44,8 @@ public class PreferencesScreen implements Screen {
         stage.draw();
 
         Gdx.input.setInputProcessor(stage);
-//        settings = Gdx.app.getPreferences("settings");
-//        settings.putBoolean("volume", true);
+
+        settings.putBoolean("soundOn", true);
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.changeScreen(AwesomeRoadTrip.MENU);
         }
@@ -70,14 +65,14 @@ public class PreferencesScreen implements Screen {
         // Create a table that fills the screen. Everything else will go inside this table.
         table = new Table();
         table.setFillParent(true);
-        table.pad(defaultPad);
+        table.pad(Settings.DEFAULTPAD);
         stage.addActor(table);
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         CheckBox volumeMute = new CheckBox("Volume mute", skin);
         TextButton backButton = new TextButton("Back to Menu", skin);
-        backButton.setHeight(buttonHeight);
-        backButton.setWidth(buttonWidth);
-        backButton.setPosition(Gdx.graphics.getWidth() - backButton.getWidth() - defaultPad, defaultPad);
+        backButton.setHeight(Settings.BUTTONHEIGHT);
+        backButton.setWidth(Settings.BUTTONWIDTH);
+        backButton.setPosition(Gdx.graphics.getWidth() - backButton.getWidth() - Settings.DEFAULTPAD, Settings.DEFAULTPAD);
         stage.addActor(backButton);
 
         backButton.addListener(new ClickListener() {
@@ -95,11 +90,11 @@ public class PreferencesScreen implements Screen {
         });
         Slider volumeSlider = new Slider(0.0f, 10.0f, 0.5f, false, skin);
         volumeSlider.setName("Volume");
-        volumeSlider.setWidth(buttonWidth);
-        volumeSlider.setHeight(buttonHeight);
+        volumeSlider.setWidth(Settings.BUTTONWIDTH);
+        volumeSlider.setHeight(Settings.BUTTONHEIGHT);
         SelectBox resolutionSelect = new SelectBox(skin);
-        resolutionSelect.setWidth(buttonWidth);
-        resolutionSelect.setHeight(buttonHeight);
+        resolutionSelect.setWidth(Settings.BUTTONWIDTH);
+        resolutionSelect.setHeight(Settings.BUTTONHEIGHT);
         resolutionSelect.setName("Resolution");
         String[] resArray = new String[6];
         resArray[0] = "640x480";
@@ -116,29 +111,34 @@ public class PreferencesScreen implements Screen {
                 System.out.println(index);
                 switch (index) {
                     case 0:
+                        Settings.changeResolution(640, 480);
                         resize(640, 480);
                     case 1:
+                        Settings.changeResolution(800, 600);
                         resize(800, 600);
                     case 2:
+                        Settings.changeResolution(1024, 768);
                         resize(1024, 768);
                     case 3:
+                        Settings.changeResolution(1280, 1024);
                         resize(1280, 1024);
                     case 4:
+                        Settings.changeResolution(1920, 1080, true);
                         resize(1920, 1080);
                         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                     case 5:
                 }
             }
         });
-        table.pad(defaultPad);
+        table.pad(Settings.DEFAULTPAD);
         table.columnDefaults(3);
         table.setFillParent(true);
         table.debug();
-        table.add(volumeMute).setActorX(buttonWidth);
+        table.add(volumeMute).setActorX(Settings.BUTTONWIDTH);
         table.row();
-        table.add(volumeSlider).setActorX(buttonWidth);
+        table.add(volumeSlider).setActorX(Settings.BUTTONWIDTH);
         table.row();
-        table.add(resolutionSelect).setActorX(buttonWidth);
+        table.add(resolutionSelect).setActorX(Settings.BUTTONWIDTH);
     }
 
     @Override
