@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 import org.rainbowlabs.awesomeroadtrip.core.HealthBar;
 
@@ -26,6 +28,8 @@ public class ExampleLevelScreen implements Screen {
     private Sprite mapSprite;
     private HealthBar healthBar;
     private TextField userInput;
+    private TextField output;
+    private BitmapFont font;
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
 
@@ -69,7 +73,22 @@ public class ExampleLevelScreen implements Screen {
         userInput = new TextField("", skin);
         userInput.setMessageText("Antwort");
         userInput.setPosition(30, 30);
+
+        // Configuration output field
+        output = new TextField("", skin);
+        output.setMessageText("ajfapkfps vsdnofojsdmv wepfölc ");
+        output.setPosition(450, 430 );
+        output.setWidth(800f);
+        output.setDisabled(true);
+
+        // Append to stage
         stage.addActor(userInput);
+        stage.addActor(output);
+
+        font = new BitmapFont(Gdx.files.internal("font/black.fnt"), false);
+        font.setColor(Color.RED);
+        font.getData().setScale(0.1f, 0.1f);
+
     }
 
     @Override
@@ -94,6 +113,13 @@ public class ExampleLevelScreen implements Screen {
             stage.draw();
             stage.act();
         }
+        //font.setScale(.2f);
+        batch.begin();
+        font.draw(batch, "Hello World!", 50, 50);
+        batch.end();
+
+
+
     }
 
     private void handleInput(){
@@ -102,6 +128,7 @@ public class ExampleLevelScreen implements Screen {
             parent.changeScreen(AwesomeRoadTrip.PAUSESCREEN);
         }else if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             System.out.println("User Input: " + userInput.getText());
+            output.setText(userInput.getText());
         }
 
         handleCamInput();
@@ -150,9 +177,9 @@ public class ExampleLevelScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        cam.viewportWidth = 30f;
-        cam.viewportHeight = 30f * height/width;
-        cam.update();
+
+        stage.getViewport().update(width, height, true);
+
     }
 
     @Override
