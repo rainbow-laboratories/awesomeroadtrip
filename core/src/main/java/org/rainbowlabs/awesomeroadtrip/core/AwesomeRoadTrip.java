@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import org.rainbowlabs.awesomeroadtrip.core.screen.*;
+import org.rainbowlabs.awesomeroadtrip.core.utility.Settings;
 
 import static com.badlogic.gdx.Gdx.graphics;
 
@@ -36,6 +37,8 @@ public class AwesomeRoadTrip extends Game {
 
     @Override
     public void create() {
+        Settings.initializeSettings();
+        Settings.getPreferences().flush();
         this.changeScreen(AwesomeRoadTrip.LOADING);
     }
 

@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 import org.rainbowlabs.awesomeroadtrip.core.utility.Settings;
 
+import java.util.Set;
+
 
 public class PreferencesScreen implements Screen {
     private AwesomeRoadTrip game;
@@ -65,14 +67,15 @@ public class PreferencesScreen implements Screen {
         // Create a table that fills the screen. Everything else will go inside this table.
         table = new Table();
         table.setFillParent(true);
-        table.pad(Settings.DEFAULTPAD);
+        table.pad(Settings.getDEFAULTPAD());
         stage.addActor(table);
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         CheckBox volumeMute = new CheckBox("Volume mute", skin);
+        volumeMute.setChecked(Settings.getPreferences().getBoolean("soundOn"));
         TextButton backButton = new TextButton("Back to Menu", skin);
-        backButton.setHeight(Settings.BUTTONHEIGHT);
-        backButton.setWidth(Settings.BUTTONWIDTH);
-        backButton.setPosition(Gdx.graphics.getWidth() - backButton.getWidth() - Settings.DEFAULTPAD, Settings.DEFAULTPAD);
+        backButton.setHeight(Settings.getBUTTONHEIGHT());
+        backButton.setWidth(Settings.getBUTTONWIDTH());
+        backButton.setPosition(Gdx.graphics.getWidth() - backButton.getWidth() - Settings.getDEFAULTPAD(), Settings.getDEFAULTPAD());
         stage.addActor(backButton);
 
         backButton.addListener(new ClickListener() {
@@ -85,25 +88,33 @@ public class PreferencesScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (volumeMute.isChecked()) {
+                    Settings.getPreferences().putBoolean("soundOn", true);
+                    Settings.getPreferences().flush();
+                } else {
+                    Settings.getPreferences().putBoolean("soundOn", false);
+                    Settings.getPreferences().flush();
                 }
             }
         });
         Slider volumeSlider = new Slider(0.0f, 10.0f, 0.5f, false, skin);
         volumeSlider.setName("Volume");
-        volumeSlider.setWidth(Settings.BUTTONWIDTH);
-        volumeSlider.setHeight(Settings.BUTTONHEIGHT);
+        volumeSlider.setWidth(Settings.getBUTTONWIDTH());
+        volumeSlider.setHeight(Settings.getBUTTONHEIGHT());
+        volumeSlider.setValue(Settings.getPreferences().getFloat("volume"));
+        volumeSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Settings.getPreferences().putFloat("volume", volumeSlider.getValue());
+                Settings.getPreferences().flush();
+            }
+        });
+
         SelectBox resolutionSelect = new SelectBox(skin);
-        resolutionSelect.setWidth(Settings.BUTTONWIDTH);
-        resolutionSelect.setHeight(Settings.BUTTONHEIGHT);
+        resolutionSelect.setWidth(Settings.getBUTTONWIDTH());
+        resolutionSelect.setHeight(Settings.getBUTTONHEIGHT());
         resolutionSelect.setName("Resolution");
-        String[] resArray = new String[6];
-        resArray[0] = "640x480";
-        resArray[1] = "800x600";
-        resArray[2] = "1024x768";
-        resArray[3] = "1280x720";
-        resArray[4] = "1920x1080";
-        resArray[5] = "Full Screen";
-        resolutionSelect.setItems(resArray);
+        resolutionSelect.setItems(Settings.getSupportedResolutions());
+        resolutionSelect.setSelected(String.valueOf(Settings.getPreferences().getInteger("resolutionWidth")) + "x" + String.valueOf(Settings.getPreferences().getInteger("resolutionHeight")));
         resolutionSelect.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -111,34 +122,32 @@ public class PreferencesScreen implements Screen {
                 System.out.println(index);
                 switch (index) {
                     case 0:
-                        Settings.changeResolution(640, 480);
+                        Settings.changeResolution(640, 480, Settings.getPreferences().getBoolean("showFullscreen"));
                         resize(640, 480);
                     case 1:
-                        Settings.changeResolution(800, 600);
+                        Settings.changeResolution(800, 600, Settings.getPreferences().getBoolean("showFullscreen"));
                         resize(800, 600);
                     case 2:
-                        Settings.changeResolution(1024, 768);
+                        Settings.changeResolution(1024, 768, Settings.getPreferences().getBoolean("showFullscreen"));
                         resize(1024, 768);
                     case 3:
-                        Settings.changeResolution(1280, 1024);
+                        Settings.changeResolution(1280, 1024, Settings.getPreferences().getBoolean("showFullscreen"));
                         resize(1280, 1024);
                     case 4:
-                        Settings.changeResolution(1920, 1080, true);
+                        Settings.changeResolution(1920, 1080, Settings.getPreferences().getBoolean("showFullscreen"));
                         resize(1920, 1080);
-                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-                    case 5:
                 }
             }
         });
-        table.pad(Settings.DEFAULTPAD);
+        table.pad(Settings.getDEFAULTPAD());
         table.columnDefaults(3);
         table.setFillParent(true);
         table.debug();
-        table.add(volumeMute).setActorX(Settings.BUTTONWIDTH);
+        table.add(volumeMute).setActorX(Settings.getBUTTONWIDTH());
         table.row();
-        table.add(volumeSlider).setActorX(Settings.BUTTONWIDTH);
+        table.add(volumeSlider).setActorX(Settings.getBUTTONWIDTH());
         table.row();
-        table.add(resolutionSelect).setActorX(Settings.BUTTONWIDTH);
+        table.add(resolutionSelect).setActorX(Settings.getBUTTONWIDTH());
     }
 
     @Override

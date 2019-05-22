@@ -15,15 +15,6 @@ public class AwesomeRoadTripDesktop {
         config.setTitle("Awesome Math Roadtrip");
         config.useVsync(true);
         config.setWindowIcon( Files.FileType.Internal,"icons/awesome128.png");
-
-        Settings.initializeSettings();
-
-        Settings.getPreferences().putBoolean("showFullscreen", false);
-        Settings.getPreferences().putInteger("resolutionWidth", 640);
-        Settings.getPreferences().putInteger("resolutionHeight", 480);
-
-        Settings.getPreferences().flush();
-
         new Lwjgl3Application(new AwesomeRoadTrip(), config);
     }
 }
