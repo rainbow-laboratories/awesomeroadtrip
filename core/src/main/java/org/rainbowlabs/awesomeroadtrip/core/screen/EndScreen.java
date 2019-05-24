@@ -3,6 +3,7 @@ package org.rainbowlabs.awesomeroadtrip.core.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
+import org.rainbowlabs.awesomeroadtrip.core.utility.Settings;
 
 public class EndScreen implements Screen {
     private AwesomeRoadTrip game;
@@ -19,7 +20,7 @@ public class EndScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        System.err.println("Resize called in endscreen with res: " + width + "x" + height);
     }
 
     @Override

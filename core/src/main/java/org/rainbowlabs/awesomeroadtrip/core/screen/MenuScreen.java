@@ -2,26 +2,31 @@ package org.rainbowlabs.awesomeroadtrip.core.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
+import org.rainbowlabs.awesomeroadtrip.core.utility.Settings;
 
 public class MenuScreen implements Screen {
     private AwesomeRoadTrip game;
     private Table table;
     protected Stage stage;
     protected Texture background;
+    private Camera camera;
 
 
     public MenuScreen(AwesomeRoadTrip game) {
+
         this.game = game;
+        camera = new OrthographicCamera(Settings.getResolutionWidth(), Settings.getResolutionHeight());
+        stage = new Stage(new ScreenViewport(camera));
     }
 
     @Override
@@ -45,6 +50,9 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().apply(true);
+        System.err.println("Resize called in menu with res: " + width + "x" + height);
+        this.camera.update();
         stage.getViewport().update(width, height, true);
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         stage.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -53,7 +61,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
-        stage = new Stage(new ScreenViewport());
         background = new Texture("worldmap.jpg");
         // Create a table that fills the screen. Everything else will go inside this table.
         table = new Table();
@@ -67,21 +74,21 @@ public class MenuScreen implements Screen {
         newGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.changeScreen(AwesomeRoadTrip.APPLICATION);
+                game.changeScreen(new MainScreen(game));
             }
         });
         TextButton preferences = new TextButton("Preferences", skin);
         preferences.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.changeScreen(AwesomeRoadTrip.PREFERENCES);
+                game.changeScreen(new PreferencesScreen(game));
             }
         });
         TextButton exit = new TextButton("Exit", skin);
         exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.changeScreen(AwesomeRoadTrip.ENDGAME);
+                game.changeScreen(new EndScreen(game));
             }
         });
         table.add().expandX().fillX();
@@ -117,6 +124,5 @@ public class MenuScreen implements Screen {
     public void dispose() {
         stage.dispose();
         background.dispose();
-
     }
 }

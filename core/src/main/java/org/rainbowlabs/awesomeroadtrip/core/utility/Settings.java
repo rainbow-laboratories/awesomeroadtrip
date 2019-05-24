@@ -26,6 +26,14 @@ public class Settings {
 
     public static void initializeSettings() {
         preferences = Gdx.app.getPreferences("game_settings");
+        if (preferences.get().isEmpty()) {
+            preferences.putInteger("resolutionWidth", 1920);
+            preferences.putInteger("resolutionHeight", 1080);
+            preferences.putString("resolution", 1920 + "x" + 1080);
+            preferences.putBoolean("showFullscreen", false);
+            preferences.putBoolean("soundOn", false);
+            preferences.flush();
+        }
     }
 
     public static String[] getSupportedResolutions() {
@@ -36,7 +44,6 @@ public class Settings {
         preferences.putInteger("resolutionWidth", width);
         preferences.putInteger("resolutionHeight", height);
         preferences.putString("resolution", width + "x" + height);
-        preferences.putBoolean("showFullscreen", showFullscreen);
         preferences.flush();
     }
 
@@ -62,5 +69,13 @@ public class Settings {
 
     public static void setDEFAULTPAD(float DEFAULTPAD) {
         Settings.DEFAULTPAD = DEFAULTPAD;
+    }
+
+    public static int getResolutionWidth() {
+        return Settings.preferences.getInteger("resolutionWidth");
+    }
+
+    public static int getResolutionHeight() {
+        return Settings.preferences.getInteger("resolutionHeight");
     }
 }

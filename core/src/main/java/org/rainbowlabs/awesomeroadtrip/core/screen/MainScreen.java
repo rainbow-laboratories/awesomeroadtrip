@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
+import org.rainbowlabs.awesomeroadtrip.core.utility.Settings;
 
 public class MainScreen implements Screen {
     private AwesomeRoadTrip game;
@@ -17,7 +18,7 @@ public class MainScreen implements Screen {
     protected Texture background;
     protected ShapeRenderer shapeRenderer;
     protected Vector2 position;
-    float maxVelocity = 100.0f;
+    float maxVelocity = 250.0f;
     float playerWidth = 30.0f;
     float playerHeight = 60.0f;
 
@@ -63,13 +64,13 @@ public class MainScreen implements Screen {
         shapeRenderer.rect(position.x, position.y, playerWidth, playerHeight);
         shapeRenderer.end();
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            game.changeScreen(AwesomeRoadTrip.MENU);
+            game.changeScreen(new MenuScreen(game));
         }
     }
 
     @Override
     public void resize(int width, int height) {
-
+        System.err.println("Resize called in main with res: " + width + "x" + height);
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.rainbowlabs.awesomeroadtrip.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import org.rainbowlabs.awesomeroadtrip.core.screen.*;
 import org.rainbowlabs.awesomeroadtrip.core.utility.Settings;
+
+import java.util.Set;
 
 import static com.badlogic.gdx.Gdx.graphics;
 
@@ -39,36 +42,15 @@ public class AwesomeRoadTrip extends Game {
     public void create() {
         Settings.initializeSettings();
         Settings.getPreferences().flush();
-        this.changeScreen(AwesomeRoadTrip.LOADING);
+        this.changeScreen(new LoadingScreen(this));
     }
 
     @Override
     public void resize(int width, int height) {
-        super.resize(width, height);
+        super.resize(Settings.getPreferences().getInteger("resolutionWidth"), Settings.getPreferences().getInteger("resolutionHeight"));
     }
 
-    public void changeScreen(int screen) {
-        switch (screen) {
-            case MENU:
-                if (menuScreen == null) menuScreen = new MenuScreen(this);
-                setScreen(menuScreen);
-                break;
-            case PREFERENCES:
-                if (preferencesScreen == null) preferencesScreen = new PreferencesScreen(this);
-                setScreen(preferencesScreen);
-                break;
-            case APPLICATION:
-                if (mainScreen == null) mainScreen = new MainScreen(this);
-                setScreen(mainScreen);
-                break;
-            case ENDGAME:
-                if (endScreen == null) endScreen = new EndScreen(this);
-                setScreen(endScreen);
-                break;
-            case LOADING:
-                if (loadingScreen == null) loadingScreen = new LoadingScreen(this);
-                setScreen(loadingScreen);
-                break;
-        }
+    public void changeScreen(Screen screen) {
+        this.setScreen(screen);
     }
 }
