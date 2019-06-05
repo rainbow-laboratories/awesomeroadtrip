@@ -6,7 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -26,12 +29,11 @@ public class ExampleLevelScreen implements Screen {
     private Sprite mapSprite;
     private HealthBar healthBar;
     private TextField userInput;
+    private ShapeRenderer shapeRenderer = new ShapeRenderer();
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
 
     private long lastUpdate = 0L;
-
-
 
 
     public ExampleLevelScreen(AwesomeRoadTrip awesomeRoadTrip) {
@@ -50,6 +52,7 @@ public class ExampleLevelScreen implements Screen {
         float h = Gdx.graphics.getHeight();
         cam = new OrthographicCamera(30, 30 * (h / w));
         batch = new SpriteBatch();
+
 
         //Cam positioning
         cam.zoom = 3.3f;
@@ -72,9 +75,10 @@ public class ExampleLevelScreen implements Screen {
         stage.addActor(userInput);
     }
 
+
     @Override
     public void render(float delta) {
-        if(!parent.isGAME_PAUSED()) {
+        if (!parent.isGAME_PAUSED()) {
             handleInput();
             cam.update();
             batch.setProjectionMatrix(cam.combined);
@@ -92,15 +96,16 @@ public class ExampleLevelScreen implements Screen {
                 lastUpdate = System.currentTimeMillis();
             }
             stage.draw();
+            drawGrid();
             stage.act();
         }
     }
 
-    private void handleInput(){
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+    private void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             //Switch to pause screen
             parent.changeScreen(AwesomeRoadTrip.PAUSESCREEN);
-        }else if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             System.out.println("User Input: " + userInput.getText());
         }
 
@@ -139,7 +144,7 @@ public class ExampleLevelScreen implements Screen {
             cam.rotate(rotationSpeed, 0, 0, 1);
         }
 
-        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
+        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100 / cam.viewportWidth);
 
         float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
         float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
@@ -148,10 +153,21 @@ public class ExampleLevelScreen implements Screen {
         cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
     }
 
+
+    public void drawGrid() {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        for (int x = 0; x < Gdx.graphics.getWidth(); x += 32) {
+            for (int y = 0; y < Gdx.graphics.getHeight(); y += 32) {
+                shapeRenderer.rect(x, y, 32, 32);
+            }
+        }
+        shapeRenderer.end();
+    }
+
     @Override
     public void resize(int width, int height) {
         cam.viewportWidth = 30f;
-        cam.viewportHeight = 30f * height/width;
+        cam.viewportHeight = 30f * height / width;
         cam.update();
     }
 
