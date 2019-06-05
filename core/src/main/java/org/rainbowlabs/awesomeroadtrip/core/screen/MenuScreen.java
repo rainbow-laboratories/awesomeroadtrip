@@ -70,6 +70,39 @@ public class MenuScreen implements Screen {
                 game.changeScreen(AwesomeRoadTrip.APPLICATION);
             }
         });
+        TextButton lvl1 = new TextButton("Level 1", skin);
+        lvl1.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.changeScreen(AwesomeRoadTrip.LVL1);
+            }
+        });
+        TextButton lvl2 = new TextButton("Level 2", skin);
+        lvl2.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.changeScreen(AwesomeRoadTrip.LVL2);
+            }
+        });
+        TextButton lvl3 = new TextButton("Level 3", skin);
+        lvl3.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.changeScreen(AwesomeRoadTrip.LVL3);
+            }
+        });        TextButton lvl4 = new TextButton("Level 4", skin);
+        lvl4.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.changeScreen(AwesomeRoadTrip.LVL4);
+            }
+        });        TextButton lvl5 = new TextButton("Level 5", skin);
+        lvl5.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.changeScreen(AwesomeRoadTrip.LVL5);
+            }
+        });
         TextButton preferences = new TextButton("Preferences", skin);
         preferences.addListener(new ClickListener() {
             @Override
@@ -85,7 +118,23 @@ public class MenuScreen implements Screen {
             }
         });
         table.add().expandX().fillX();
-        table.add(newGame).expandX().fillX();
+        table.add(lvl1).expandX().fillX();
+        table.add().expandX().fillX();
+        table.row().pad(10, 0, 10, 0);
+        table.add().expandX().fillX();
+        table.add(lvl2).expandX().fillX();
+        table.add().expandX().fillX();
+        table.row().pad(10, 0, 10, 0);
+        table.add().expandX().fillX();
+        table.add(lvl3).expandX().fillX();
+        table.add().expandX().fillX();
+        table.row().pad(10, 0, 10, 0);
+        table.add().expandX().fillX();
+        table.add(lvl4).expandX().fillX();
+        table.add().expandX().fillX();
+        table.row().pad(10, 0, 10, 0);
+        table.add().expandX().fillX();
+        table.add(lvl5).expandX().fillX();
         table.add().expandX().fillX();
         table.row().pad(10, 0, 10, 0);
         table.add().expandX().fillX();
