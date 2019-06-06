@@ -2,11 +2,6 @@ package org.rainbowlabs.awesomeroadtrip.core;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 
-/**
- * The progress bar which reassembles the behaviour of the health bar.
- *
- * @author serhiy
- */
 public class HealthBar extends ProgressBar {
 
     /**
@@ -15,9 +10,9 @@ public class HealthBar extends ProgressBar {
      */
     public HealthBar(int width, int height) {
         super(0f, 1f, 0.01f, false, new ProgressBarStyle());
-        getStyle().background = Utils.getColoredDrawable(width, height, Color.RED);
-        getStyle().knob = Utils.getColoredDrawable(0, height, Color.GREEN);
-        getStyle().knobBefore = Utils.getColoredDrawable(width, height, Color.GREEN);
+        getStyle().background = Utils.getColoredDrawable(width, height, Color.GRAY);
+        getStyle().knob = Utils.getColoredDrawable(0, height, Color.BLUE);
+        getStyle().knobBefore = Utils.getColoredDrawable(width, height, Color.BLUE);
 
         setWidth(width);
         setHeight(height);

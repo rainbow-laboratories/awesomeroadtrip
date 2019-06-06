@@ -15,13 +15,13 @@ public class AwesomeRoadTrip extends Game {
     public MainScreen mainScreen;
     public EndScreen endScreen;
     public PauseScreen pauseScreen;
-    public ExampleLevelScreen levelScreen;
     public Screen pausedScreen;
     public Lvl1 lvl1;
     public Lvl2 lvl2;
     public Lvl3 lvl3;
     public Lvl4 lvl4;
     public Lvl5 lvl5;
+
 
     public float delta;
 
@@ -49,7 +49,7 @@ public class AwesomeRoadTrip extends Game {
 
     @Override
     public void create() {
-        this.changeScreen(AwesomeRoadTrip.LOADING);
+        this.changeScreen(LOADING);
     }
 
     @Override
