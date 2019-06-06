@@ -72,14 +72,6 @@ public class PauseScreen implements Screen {
         stage.addActor(table);
 
 
-        TextButton newGame = new TextButton("New Game", skin);
-        newGame.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreen(AwesomeRoadTrip.APPLICATION);
-                dispose();
-            }
-        });
         TextButton preferences = new TextButton("Preferences", skin);
         preferences.addListener(new ClickListener() {
             @Override
@@ -100,10 +92,7 @@ public class PauseScreen implements Screen {
         table.add(label).expandX().fillX();
         table.add().expandX().fillX();
         table.row();
-        table.row();
-        table.add().expandX().fillX();
-        table.add(newGame).expandX().fillX();
-        table.add().expandX().fillX();
+        table.row();on
         table.row().pad(10, 0, 10, 0);
         table.add().expandX().fillX();
         table.add(preferences).expandX().fillX();

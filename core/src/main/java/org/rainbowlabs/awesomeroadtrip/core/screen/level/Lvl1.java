@@ -13,10 +13,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.rainbowlabs.awesomeroadtrip.core.AwesomeRoadTrip;
 import org.rainbowlabs.awesomeroadtrip.core.HealthBar;
+import org.rainbowlabs.awesomeroadtrip.core.math.CurveSketching;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Lvl1 implements Screen {
@@ -29,6 +32,8 @@ public class Lvl1 implements Screen {
     private Sprite mapSprite;
     private HealthBar healthBar;
     private TextField userInput;
+    private TextField output;
+    private CurveSketching fx;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
@@ -50,7 +55,7 @@ public class Lvl1 implements Screen {
         // Height is multiplied by aspect ratio.
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-        cam = new OrthographicCamera(30, 30 * (h / w));
+        cam = new OrthographicCamera(0, 0);
         batch = new SpriteBatch();
 
 
@@ -67,12 +72,24 @@ public class Lvl1 implements Screen {
         healthBar.setPosition(10, Gdx.graphics.getHeight() - 20);
         stage.addActor(healthBar);
 
+
+
         // Place User Input
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         userInput = new TextField("", skin);
         userInput.setMessageText("Antwort");
         userInput.setPosition(30, 30);
         stage.addActor(userInput);
+
+        //Function
+        fx = new CurveSketching(2, 2);
+
+        // Place Output
+        output = new TextField("", skin);
+        output.setMessageText(fx.toString());
+        output.setPosition(480, 440);
+        stage.addActor(output);
+
     }
 
 
@@ -155,11 +172,20 @@ public class Lvl1 implements Screen {
 
 
     public void drawGrid() {
+        int x_step = 0;
+        int y_step = 0;
+        ArrayList<Double> test = fx.lookUpTable(-10, 10, 1);
+        System.out.println(test);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (int x = 0; x < Gdx.graphics.getWidth(); x += 32) {
-            for (int y = 0; y < Gdx.graphics.getHeight(); y += 32) {
+            for (int y = 100; y < Gdx.graphics.getHeight() - 100; y += 32) {
                 shapeRenderer.rect(x, y, 32, 32);
+                shapeRenderer.setColor(Color.BLACK);
+                y_step ++;
             }
+            y_step = 0;
+            x_step ++;
+
         }
         shapeRenderer.end();
     }
