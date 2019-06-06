@@ -92,7 +92,7 @@ public class PauseScreen implements Screen {
         table.add(label).expandX().fillX();
         table.add().expandX().fillX();
         table.row();
-        table.row();on
+        table.row();
         table.row().pad(10, 0, 10, 0);
         table.add().expandX().fillX();
         table.add(preferences).expandX().fillX();
